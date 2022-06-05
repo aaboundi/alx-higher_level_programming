@@ -9,4 +9,5 @@ def uppercase(str):
         return
     for i in range(len(str)):
         c = ord(str[i])
-        print('{:c}'.format(ordA + c - orda if (c >= orda and c <= ordz) else c), end=('\n' if i == last else ''))
+        print('{:c}'.format(ordA + c - orda if (c >= orda and c <= ordz) 
+                            else c), end=('\n' if i == last else ''))
