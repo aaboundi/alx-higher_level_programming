@@ -2,6 +2,7 @@
 # 6-square.py
 """Define a class Square."""
 
+
 class Square:
     """Represent a square."""
 
