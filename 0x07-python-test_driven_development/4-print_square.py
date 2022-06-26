@@ -1,16 +1,23 @@
 #!/usr/bin/python3
-# 0-add_integer.py
-"""Defines an integer addition function."""
+# 4-print_square.py
+"""
+Module print_square
+Prints a square with the character #.
+"""
 
 
-def add_integer(a, b=98):
-    """Return the integer addition of a and b.
-    Float arguments are typecasted to ints before addition is performed.
-    Raises:
-        TypeError: If either of a or b is a non-integer and non-float.
+def print_square(size):
+    """Prints a square where size is
+    the length and width of the square.
     """
-    if ((not isinstance(a, int) and not isinstance(a, float))):
-        raise TypeError("a must be an integer")
-    if ((not isinstance(b, int) and not isinstance(b, float))):
-        raise TypeError("b must be an integer")
-    return (int(a) + int(b))
+
+    if type(size) is not int:
+        raise TypeError("size must be an integer")
+
+    if size < 0:
+        raise ValueError("size must be >= 0")
+
+    for i in range(size):
+        for j in range(size):
+            print('#', end='')
+        print()
