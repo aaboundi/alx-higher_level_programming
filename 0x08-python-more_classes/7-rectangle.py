@@ -4,73 +4,82 @@
 
 
 class Rectangle:
-    """Represent a rectangle."""
+    """Represent a rectangle.
+    Attributes:
+        number_of_instances (int): The number of Rectangle instances.
+        print_symbol (any): The symbol used for string representation.
+    """
 
-    def __init__(self, size=0, position=(0, 0)):
-        """Initializes the data."""
-        self.__size = size
-        self.__position = position
+    number_of_instances = 0
+    print_symbol = "#"
 
-    def __str__(self):
-        """Str method for print from main module."""
-        my_str = ""
-        if self.__size == 0:
-            return ''
-        else:
-            my_str += '\n' * self.__position[1]
-            for i in range(0, self.__size):
-                my_str += ' ' * self.__position[0]
-                my_str += '#' * self.__size
-                my_str += '\n'
-            return my_str[:-1]
+    def __init__(self, width=0, height=0):
+        """Initialize a new Rectangle.
+        Args:
+            width (int): The width of the new rectangle.
+            height (int): The height of the new rectangle.
+        """
+        type(self).number_of_instances += 1
+        self.width = width
+        self.height = height
 
     @property
-    def size(self):
-        """Retrieves the size."""
-        return self.__size
+    def width(self):
+        """Get/set the width of the Rectangle."""
+        return self.__width
 
-    @size.setter
-    def size(self, value):
-        """Sets the size to a value."""
+    @width.setter
+    def width(self, value):
         if not isinstance(value, int):
-            raise TypeError("size must be an integer")
-        elif value < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = value
+            raise TypeError("width must be an integer")
+        if value < 0:
+            raise ValueError("width must be >= 0")
+        self.__width = value
 
     @property
-    def position(self):
-        """Retrieves the position."""
-        return self.__position
+    def height(self):
+        """Get/set the height of the Rectangle."""
+        return self.__height
 
-    @position.setter
-    def position(self, value):
-        """Sets the position to a value."""
-        if not isinstance(value, tuple) or len(value) != 2:
-            raise TypeError("position must be a tuple of 2 positive integers")
-        if not isinstance(value[0], int) or not isinstance(value[1], int):
-            raise TypeError("position must be a tuple of 2 positive integers")
-        if value[0] < 0 or value[1] < 0:
-            raise TypeError("position must be a tuple of 2 positive integers")
-        self.__position = value
+    @height.setter
+    def height(self, value):
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
 
     def area(self):
-        """Returns the current square area."""
-        return self.__size ** 2
+        """Return the area of the Rectangle."""
+        return (self.__width * self.__height)
 
-    def my_print(self):
-        """Prints to stdout the square with the character #,
-        at the position given by the position attribute.
+    def perimeter(self):
+        """Return the perimeter of the Rectangle."""
+        if self.__width == 0 or self.__height == 0:
+            return (0)
+        return ((self.__width * 2) + (self.__height * 2))
+
+    def __str__(self):
+        """Return the printable representation of the Rectangle.
+        Represents the rectangle with the # character.
         """
-        if self.__size == 0:
-            print()
-        else:
-            for y in range(0, self.__position[1]):
-                print()
-            for i in range(0, self.__size):
-                for x in range(0, self.__position[0]):
-                    print(" ", end="")
-                for j in range(0, self.__size):
-                    print("#", end="")
-                print()
-            return ''
+        if self.__width == 0 or self.__height == 0:
+            return ("")
+
+        rect = []
+        for i in range(self.__height):
+            [rect.append(str(self.print_symbol)) for j in range(self.__width)]
+            if i != self.__height - 1:
+                rect.append("\n")
+        return ("".join(rect))
+
+    def __repr__(self):
+        """Return the string representation of the Rectangle."""
+        rect = "Rectangle(" + str(self.__width)
+        rect += ", " + str(self.__height) + ")"
+        return (rect)
+
+    def __del__(self):
+        """Print a message for every deletion of a Rectangle."""
+        type(self).number_of_instances -= 1
+        print("Bye rectangle...")
