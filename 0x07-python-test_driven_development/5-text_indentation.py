@@ -1,23 +1,29 @@
 #!/usr/bin/python3
 # 5-text_indentation.py
-"""
-Module print_square
-Prints a square with the character #.
-"""
+"""Defines a text-indentation function."""
 
 
-def print_square(size):
-    """Prints a square where size is
-    the length and width of the square.
+def text_indentation(text):
+    """Print text with two new lines after each '.', '?', and ':'.
+    Args:
+        text (string): The text to print.
+    Raises:
+        TypeError: If text is not a string.
     """
+    if not isinstance(text, str):
+        raise TypeError("text must be a string")
 
-    if type(size) is not int:
-        raise TypeError("size must be an integer")
+    c = 0
+    while c < len(text) and text[c] == ' ':
+        c += 1
 
-    if size < 0:
-        raise ValueError("size must be >= 0")
-
-    for i in range(size):
-        for j in range(size):
-            print('#', end='')
-        print()
+    while c < len(text):
+        print(text[c], end="")
+        if text[c] == "\n" or text[c] in ".?:":
+            if text[c] in ".?:":
+                print("\n")
+            c += 1
+            while c < len(text) and text[c] == ' ':
+                c += 1
+            continue
+        c += 1
