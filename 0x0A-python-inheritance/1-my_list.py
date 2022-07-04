@@ -3,7 +3,7 @@
 """Creates a class inheriting from the list class."""
 
 
-class MyList((list):
+class MyList(list):
     """Class MyList inherits from list."""
 
     def print_sorted(self):
