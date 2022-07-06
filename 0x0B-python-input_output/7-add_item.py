@@ -3,35 +3,21 @@
 """A script that stores arguments to a JSON file."""
 
 import sys
-import os
-from importlib import import_module as using
+import json
+import os.path
 
+save_to_json_file = __import__("5-save_to_json_file").save_to_json_file
+load_from_json_file = __import__("6-load_from_json_file").load_from_json_file
 
-save_to_json_file, load_from_json_file = (
-    using('5-save_to_json_file').save_to_json_file,
-    using('6-load_from_json_file').load_from_json_file
-)
-"""The functions for saving and loading lists."""
+my_file = 'add_item.json'
 
-args_list = []
-"""The list of arguments."""
+my_list = []
 
-args_list_file_name = 'add_item.json'
-"""The file name of the file containing the list of arguments."""
+if os.path.exists(my_file) and os.path.getsize(my_file) > 0:
+    my_list = load_from_json_file(my_file)
 
+if len(sys.argv) > 1:
+    for elem in sys.argv[1:]:
+        my_list.append(elem)
 
-def run():
-    """Runs the routines of this script."""
-    
-    if not os.path.exists(args_list_file_name):
-        with open(args_list_file_name, mode='w', encoding='utf-8') as file:
-            file.write('[]')
-    json_list = load_from_json_file(args_list_file_name)
-    if (type(json_list) is list) and all(type(s) is str for s in json_list):
-        args_list.extend(json_list)
-    args_list.extend(sys.argv[1:])
-    save_to_json_file(args_list, args_list_file_name)
-
-
-if __name__ == '__main__':
-    run()
+save_to_json_file(my_list, my_file)
