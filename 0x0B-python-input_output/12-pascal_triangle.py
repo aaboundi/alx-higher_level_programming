@@ -1,29 +1,29 @@
 #!/usr/bin/python3
 # 12-pascal_triangle.py
-"""Module 14-pascal_triangle.
-Returns a list of lists of integers
-representing the Pascal’s triangle of n.
-"""
+"""A module containing combinatorial mathematical functions."""
 
 
 def pascal_triangle(n):
-    """Returns the pascal triangle of n.
+    """Generates a list of lists of integers representing the
+    Pascal’s triangle of a given integer.
     Args:
-        - n: size of the triangle (rows)
-    Returns: a list of list of integers
+        n (int): The number of rows in the triangle.
+    Returns:
+        list: A list of integers containing the values of their
+        respective row in Pascal's triangle for the given number.
     """
-
+    res = []
     if n <= 0:
-        return []
-
-    l = [[0 for x in range(i + 1)] for i in range(n)]
-    l[0] = [1]
-
-    for i in range(1, n):
-        l[i][0] = 1
-        for j in range(1, i + 1):
-            if j < len(l[i - 1]):
-                l[i][j] = l[i - 1][j - 1] + l[i - 1][j]
-            else:
-                l[i][j] = l[i - 1][0]
-    return l
+        return res
+    for i in range(n):
+        row = []
+        for j in range(i + 1):
+            top_left = 1 if i == 0 else 0
+            top_right = 0
+            if (i > 0) and (j > 0):
+                top_left = res[i - 1][j - 1]
+            if (i > 0) and (j < len(res[i - 1])):
+                top_right = res[i - 1][j]
+            row.append(top_left + top_right)
+        res.append(row)
+    return res
