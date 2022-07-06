@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # 0-read_file.py
-"""Finding a list of available attributes and methods of an object."""
+"""Reads from a file and prints."""
 
 
-def lookup(obj):
-    """Returns that list of attributes and methods.
-
+def read_file(filename=""):
+    """Reads from filename and prints
+    its contents to stdout.
     Args:
-
-    - obj: object to look into
-
+        - filename: name of the file
     """
 
-    return dir(obj)
+    with open(filename) as f:
+        read_text = f.read()
+        print(read_text, end="")
