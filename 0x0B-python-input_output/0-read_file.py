@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# 0-lookup.py
+# 0-read_file.py
 """Finding a list of available attributes and methods of an object."""
 
 
