@@ -4,11 +4,10 @@
 
 
 def class_to_json(obj):
-    """Retrieves the dictionary description of an object.
+    """Creates a dict description of obj.
     Args:
-        obj (any): An object whose attributes are to be retrieved.
-    Returns:
-        dict: The attributes of the object, otherwise None.
+        - obj: object to serialize
+    Returns: dictionnary description of obj
     """
-    if '__dict__' in dir(obj):
-        return obj.
+
+    return obj.__dict__
