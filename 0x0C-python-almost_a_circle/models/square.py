@@ -1,173 +1,82 @@
 #!/usr/bin/python3
-# test_square.py
-"""Defines unittests for models/square.py.
-Unittest classes:
-    TestSquare_instantiation - line 24
-    TestSquare_size - line 88
-    TestSquare_x - line 166
-    TestSquare_y - line 238
-    TestSquare_order_of_initialization - line 306
-    TestSquare_area - line 322
-    TestSquare_stdout - line 343
-    TestSquare_update_args - line 426
-    TestSquare_update_kwargs - line 538
-    TestSquare_to_dictionary - 640
-"""
-import io
-import sys
-import unittest
-
-"""
-from models.base import Base
-from models.square import Square
-"""
+# square.py
+"""Defines a square class."""
+from models.rectangle import Rectangle
 
 
-class TestSquare(unittest.TestCase):
-    """Test class for Square class."""
+class Square(Rectangle):
+    """Represent a square."""
 
-    def setUp(self):
-        Base._Base__nb_objects = 0
+    def __init__(self, size, x=0, y=0, id=None):
+        """Initialize a new Square.
+        Args:
+            size (int): The size of the new Square.
+            x (int): The x coordinate of the new Square.
+            y (int): The y coordinate of the new Square.
+            id (int): The identity of the new Square.
+        """
+        super().__init__(size, size, x, y, id)
 
-    def test_10_0(self):
-        """Test Square class: check for attributes."""
+    @property
+    def size(self):
+        """Get/set the size of the Square."""
+        return self.width
 
-        s0 = Square(1)
-        self.assertEqual(s0.id, 1)
-        s1 = Square(5, 3, 4)
-        self.assertEqual(s1.height, 5)
-        self.assertEqual(s1.width, 5)
-        self.assertEqual(s1.x, 3)
-        self.assertEqual(s1.y, 4)
-        self.assertEqual(s1.id, 2)
+    @size.setter
+    def size(self, value):
+        self.width = value
+        self.height = value
 
-    def test_10_1(self):
-        """Test __str__ representation."""
+    def update(self, *args, **kwargs):
+        """Update the Square.
+        Args:
+            *args (ints): New attribute values.
+                - 1st argument represents id attribute
+                - 2nd argument represents size attribute
+                - 3rd argument represents x attribute
+                - 4th argument represents y attribute
+            **kwargs (dict): New key/value pairs of attributes.
+        """
+        if args and len(args) != 0:
+            a = 0
+            for arg in args:
+                if a == 0:
+                    if arg is None:
+                        self.__init__(self.size, self.x, self.y)
+                    else:
+                        self.id = arg
+                elif a == 1:
+                    self.size = arg
+                elif a == 2:
+                    self.x = arg
+                elif a == 3:
+                    self.y = arg
+                a += 1
 
-        s1 = Square(9, 4, 5, 6)
-        self.assertEqual(str(s1), "[Square] (6) 4/5 - 9")
+        elif kwargs and len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "id":
+                    if v is None:
+                        self.__init__(self.size, self.x, self.y)
+                    else:
+                        self.id = v
+                elif k == "size":
+                    self.size = v
+                elif k == "x":
+                    self.x = v
+                elif k == "y":
+                    self.y = v
 
-    def test_10_2(self):
-        """Test Square class: check for inheritance."""
+    def to_dictionary(self):
+        """Return the dictionary representation of the Square."""
+        return {
+            "id": self.id,
+            "size": self.width,
+            "x": self.x,
+            "y": self.y
+        }
 
-        s1 = Square(6)
-        self.assertTrue(isinstance(s1, Rectangle))
-        self.assertTrue(issubclass(Square, Rectangle))
-        self.assertFalse(isinstance(Square, Rectangle))
-        self.assertTrue(isinstance(s1, Base))
-        self.assertTrue(issubclass(Square, Base))
-        self.assertFalse(isinstance(Square, Base))
-
-    def test_10_3(self):
-        """Test Square class: check for missing args."""
-
-        with self.assertRaises(TypeError) as x:
-            s1 = Square()
-        self.assertEqual(
-            "__init__() missing 1 required positional argument: 'size'", str(
-                x.exception))
-
-    def test_10_4(self):
-        """Test Square for methods inherited from Rectangle."""
-
-        s1 = Square(9)
-        self.assertEqual(s1.area(), 81)
-        s2 = Square(4, 1, 2, 5)
-        s2.update(7)
-        self.assertEqual(s2.id, 7)
-        f = io.StringIO()
-        s3 = Square(4)
-        with contextlib.redirect_stdout(f):
-            s3.display()
-        s = f.getvalue()
-        res = "####\n####\n####\n####\n"
-        self.assertEqual(s, res)
-
-    def test_11_0(self):
-        """Test Square class: check for size attribute."""
-
-        s1 = Square(8)
-        self.assertEqual(s1.size, 8)
-        s2 = Square(9, 8, 7, 2)
-        self.assertEqual(s2.size, 9)
-
-    def test_11_1(self):
-        """Test Square class: check for wrong attributes."""
-
-        with self.assertRaises(TypeError) as x:
-            s = Square("Hello", 2)
-        self.assertEqual("width must be an integer", str(x.exception))
-        with self.assertRaises(TypeError) as x:
-            s = Square(2, "World")
-        self.assertEqual("x must be an integer", str(x.exception))
-        with self.assertRaises(TypeError) as x:
-            s = Square(1, 2, "Foo", 3)
-        self.assertEqual("y must be an integer", str(x.exception))
-        with self.assertRaises(ValueError) as x:
-            s = Square(0, 2)
-        self.assertEqual("width must be > 0", str(x.exception))
-        with self.assertRaises(ValueError) as x:
-            s = Square(-1)
-        self.assertEqual("width must be > 0", str(x.exception))
-        with self.assertRaises(ValueError) as x:
-            s = Square(2, -3)
-        self.assertEqual("x must be >= 0", str(x.exception))
-        with self.assertRaises(ValueError) as x:
-            s = Square(2, 5, -5, 6)
-        self.assertEqual("y must be >= 0", str(x.exception))
-
-    def test_12_0(self):
-        """Test update method on Square."""
-
-        s1 = Square(5)
-        s1.update(10)
-        self.assertEqual(s1.id, 10)
-        s1.update(x=12)
-        self.assertEqual(s1.x, 12)
-        s1.update(size=7, id=89, y=1)
-        self.assertEqual(s1.size, 7)
-        self.assertEqual(s1.id, 89)
-        self.assertEqual(s1.y, 1)
-        s1.update()
-        self.assertEqual(s1.size, 7)
-        self.assertEqual(s1.id, 89)
-        self.assertEqual(s1.y, 1)
-
-    def test_12_1(self):
-        """Test for update method on Square with wrong types."""
-
-        s1 = Square(9)
-        with self.assertRaises(TypeError) as x:
-            s1.update(2, 3, 4, "hello")
-        self.assertEqual("y must be an integer", str(x.exception))
-        with self.assertRaises(TypeError) as x:
-            s1.update("hello", 8, 9)
-        self.assertEqual("id must be an integer", str(x.exception))
-
-    def test_14_0(self):
-        """Test for public method to_dictionary."""
-
-        s1 = Square(10, 2, 1)
-        s1_dictionary = s1.to_dictionary()
-        s_dictionary = {'x': 2, 'y': 1, 'id': 1, 'size': 10}
-        self.assertEqual(len(s1_dictionary), len(s_dictionary))
-        self.assertEqual(type(s1_dictionary), dict)
-        s2 = Square(1, 1)
-        s2.update(**s1_dictionary)
-        s2_dictionary = s2.to_dictionary()
-        self.assertEqual(len(s1_dictionary), len(s2_dictionary))
-        self.assertEqual(type(s2_dictionary), dict)
-        self.assertFalse(s1 == s2)
-
-    def test_14_1(self):
-        """Test for public method to_dictionary with wrong args."""
-
-        s = "to_dictionary() takes 1 positional argument but 2 were given"
-        with self.assertRaises(TypeError) as x:
-            s1 = Square(10, 2, 1, 9)
-            s1_dictionary = s1.to_dictionary("Hi")
-        self.assertEqual(s, str(x.exception))
-
-
-if __name__ == '__main__':
-    unittest.main()
+    def __str__(self):
+        """Return the print() and str() representation of a Square."""
+        return "[Square] ({}) {}/{} - {}".format(self.id, self.x, self.y,
+                                                 self.width)
