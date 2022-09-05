@@ -1,10 +1,5 @@
 #!/usr/bin/node
-const multiLine = [
-	'C is fun',
-	'Python is cool',
-	'JavaScript is amazing'
-];
-
-for (let i = 0; i < multiLine.length; i++) {
+const multiLine = ['C is fun', 'Python is cool', 'JavaScript is amazing'];
+for (let i = 0; i < 3; i++) {
 	console.log(multiLine[i]);
 }
