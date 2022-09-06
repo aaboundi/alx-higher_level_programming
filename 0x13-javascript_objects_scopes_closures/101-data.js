@@ -1,10 +1,9 @@
 #!/usr/bin/node
-module.exports = class Rectangle {
-  constructor (w, h) {
-    if (w > 0 && h > 0) { [this.width, this.height] = [w, h]; }
-  }
-
-  print () {
-    for (let i = 0; i < this.height; i++) console.log('X'.repeat(this.width));
-  }
+exports.dict = {
+  89: 1,
+  90: 2,
+  91: 1,
+  92: 3,
+  93: 1,
+  94: 2
 };
