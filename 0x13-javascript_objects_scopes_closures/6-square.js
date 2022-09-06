@@ -1,11 +1,10 @@
 #!/usr/bin/node
-
-module.exports = class Rectangle {
-	constructor (w, h) {
-		if (w > 0 && h > 0) { [this.width, this.height] = [w, h]; }
-	}
-
-	print () {
-		for (let i = 0; i < this.height; i++) console.log('X'.repeat(this.width));
-	}
+module.exports = class Square extends require('./5-square.js') {
+  charPrint (c) {
+    if (c === undefined) {
+      this.print();
+    } else {
+      for (let i = 0; i < this.height; i++) console.log(c.repeat(this.width));
+    }
+  }
 };
