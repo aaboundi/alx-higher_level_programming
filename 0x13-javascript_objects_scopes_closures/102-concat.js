@@ -1,10 +1,5 @@
 #!/usr/bin/node
-module.exports = class Rectangle {
-  constructor (w, h) {
-    if (w > 0 && h > 0) { [this.width, this.height] = [w, h]; }
-  }
-
-  print () {
-    for (let i = 0; i < this.height; i++) console.log('X'.repeat(this.width));
-  }
-};
+const fs = require('fs');
+const a = fs.readFileSync(process.argv[2], 'utf8');
+const b = fs.readFileSync(process.argv[3], 'utf8');
+fs.writeFileSync(process.argv[4], a + b);
