@@ -1,10 +1,9 @@
 #!/usr/bin/node
-const x = Math.floor(Number(process.argv[2]));
-if (isNaN(x)) {
-	console.log('Missing number of occurrences');
-}
-else {
-	for (let i = 0; i < x; i++) {
-		console.log('C is fun');
-	}
+if (process.argv.length <= 3) {
+  console.log(0);
+} else {
+  const args = process.argv.map(Number)
+    .slice(2, process.argv.length)
+    .sort((a, b) => a - b);
+  console.log(args[args.length - 2]);
 }
