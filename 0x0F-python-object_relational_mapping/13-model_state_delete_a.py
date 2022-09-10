@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""a script that changes the name of a
-State object from the database hbtn_0e_6_usa"""
+"""a script that deletes all State objects with a
+name containing the letter a from the database hbtn_0e_6_usa"""
 
-"""12-model_state_update_id_2.py"""
+"""13-model_state_delete_a.py"""
 
 if __name__ == '__main__':
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     Base.metadata.create_all(engine)
 
     session = Session(engine)
-    state = session.query(State).filter(State.id == 2).first()
-    state.name = "New Mexico"
+    for state in session.query(State).filter(State.name.like('%a%')):
+        session.delete(state)
     session.commit()
     session.close()
