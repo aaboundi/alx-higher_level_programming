@@ -3,11 +3,6 @@
 
 """model_state.py"""
 
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
 
 class State(Base):
     """
@@ -16,6 +11,11 @@ class State(Base):
     id (sqlalchemy.Integer): The state's id.
     name (sqlalchemy.String): The state's name.
     """
+    
+    from sqlalchemy import Column, Integer, String
+    from sqlalchemy.ext.declarative import declarative_base
+
+    Base = declarative_base()
 
     __tablename__ = "states"
     id = Column(Integer, primary_key=True)
