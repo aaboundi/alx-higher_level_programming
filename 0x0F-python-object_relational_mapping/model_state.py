@@ -3,8 +3,8 @@
 
 """model_state.py"""
 
-from sqlalchemy import Column, Integer, String # noqa: E402
-from sqlalchemy.ext.declarative import declarative_base # noqa: E402
+from sqlalchemy import Column, Integer, String  # noqa: E402
+from sqlalchemy.ext.declarative import declarative_base  # noqa: E402
 
 Base = declarative_base()
 
