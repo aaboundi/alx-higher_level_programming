@@ -7,14 +7,13 @@ import requests
 
 if __name__ == '__main__':
     url = 'http://0.0.0.0:5000/search_user'
-    query = sys.argv[1] if len(sys.argv) > 1 else ""
-    form_data = [('q', query)]
-    response = requests.post(url, data=form_data)
+    q = sys.argv[1] if len(sys.argv) > 1 else ""
+    response = requests.post(url, data={'q': q})
     try:
         json_content = response.json()
         if json_content:
-            print('[{}] {}'.format(json_content['id'], json_content['name']))
+            print("[{}] {}".format(json_content.get('id'), json_content.get('name')))
         else:
             print('No result')
-    except Exception:
+    except ValueError:
         print('No a valid JSON')
